@@ -47,7 +47,7 @@ int[][] kernel = {
 
 void setup() {
   size(800, 800);
-  img = loadImage("data/lizzy.jpeg");
+  img = loadImage("../data/lizzy.jpeg");
 
   pg = createGraphics(img.width, img.height);
 
