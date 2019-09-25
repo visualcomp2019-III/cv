@@ -1,6 +1,6 @@
 import javafx.util.Pair; //<>//
 PImage img;  // Declare variable "a" of type PImage
-PGraphics pg, pg2, pg3, pgHistogram;
+PGraphics pg, pg2, pg3, pgHistogram, pgSegmentation;
 int  hist[];
 
 int [] histogram(PImage img) {
@@ -11,6 +11,10 @@ int [] histogram(PImage img) {
       int bright = int(brightness(img.get(i, j)));
       hist[bright]++;
     }
+  }
+  
+    for (int x = 0; x < hist.length; x++){
+   //System.out.println(hist[x] + " " + max(hist)); 
   }
   return hist;
 }
@@ -45,8 +49,49 @@ void applyLumaInImg(){
   pg3.updatePixels();
 }
 
-void segBrightnessThreshold (PImage source, PImage dest, PImage pgHistogram) {
-  //What are we gonna do?
+int get_location_pixel(int x, int y, int input_width) {    
+  return x + (y * input_width);
+}
+
+float average_histogram(int[] histogram){
+   float sum = 0; 
+   for(int i = 0; i < histogram.length; i++){
+       sum += histogram[i];
+   }
+   return sum/histogram.length;
+}
+
+void segmentateByBrightnessThreshold (PImage source, PImage dest, PImage pgHistogram, int[] histogram, PImage black_white){
+    float interval = max(histogram)/4;
+   // System.out.print(max(histogram));
+    
+    //int start = 0;
+    //int end = interval;
+    //int start2= interval*3;
+    //int end2 = 255;
+    dest.loadPixels();
+    source.loadPixels();
+    black_white.loadPixels();
+    //System.out.println("Pixels " + dest.pixels.length + " PixelsImg: " + source.pixels.length); 
+    for (int i = 0; i < source.width; i++) {
+      for (int j = 0; j < source.height; j++) {
+        int bright = int(brightness(source.get(i, j)));
+        //System.out.println("Bright: " + bright);
+        //System.out.println("i: " + i + " j: " + j + " " + dest.width + " " + dest.height);
+        //System.out.println("Loc: " + get_location_pixel(i,j,img.width));
+        //if((bright >= start && bright <= end ) ||(bright >= start2 && bright <= end2)){
+        //   dest.pixels[get_location_pixel(i,j,img.width)] = color(0);
+        //}else{
+        //  dest.pixels[get_location_pixel(i,j,img.width)] = black_white.pixels[get_location_pixel(i,j,img.width)];
+        //} 
+        if(histogram[bright] > interval*2 && histogram[bright] < interval * 3){
+           dest.pixels[get_location_pixel(i,j,img.width)] = color(0);
+        }else{
+          dest.pixels[get_location_pixel(i,j,img.width)] = color(255);//black_white.pixels[get_location_pixel(i,j,img.width)];
+        } 
+      }
+    }
+  dest.updatePixels();
 }
 
 // ----------------------------------------
@@ -62,6 +107,7 @@ void setup() {
   pg2 = createGraphics(img.width, img.height);
   pg3 = createGraphics(img.width, img.height);
   pgHistogram = createGraphics(img.width, img.height);
+   pgSegmentation = createGraphics(img.width, img.height);
     // Displays the image at its actual size at point (0,0)
 
   //pg.beginDraw();
@@ -92,6 +138,15 @@ void setup() {
 
   pgHistogram.endDraw();
 
+
+  pgSegmentation.beginDraw();
+  hist = histogram(pg2);
+  segmentateByBrightnessThreshold(img, pgSegmentation, pgHistogram, hist, pg2);
+
+  pgSegmentation.endDraw();
+  image(pgSegmentation, 0, img.height+10);
+  
+  
   float value = 25;
   float m = map(value, 0, 100, 0, width);
 
