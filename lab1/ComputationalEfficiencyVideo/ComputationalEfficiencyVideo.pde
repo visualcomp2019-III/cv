@@ -134,10 +134,10 @@ void draw() {
     System.out.println(frameRate);
   }
   //applyGrayScale(myMovie, pgFrame, 30);
-      String frameRateText = "Eficiencia Computacional "+ frameRate/30*100 + "%";
-    fill(0);
-    textSize(12);
-    text(frameRateText, myMovie.width, 60);
+  String frameRateText = "Eficiencia Computacional "+ frameRate/30*100 + "%";
+  fill(0);
+  textSize(12);
+  text(frameRateText, myMovie.width, 60);
 
   image(myMovie, 0, 0);  
   applyConvolutionMask(myMovie, kernel, pgConvolution);
