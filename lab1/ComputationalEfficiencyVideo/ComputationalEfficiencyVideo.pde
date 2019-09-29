@@ -1,7 +1,3 @@
-
-//import processing.video.*;
-
-
 //PGraphics canvas_initial;
 //PGraphics canvas_trans;
 
@@ -33,7 +29,7 @@
 //  background(0);
 //    canvas_initial = createGraphics(1960, 1540);
 //    chargeMedia(showVideo, canvas_initial);
-    
+
 //}
 
 //void draw(){
@@ -53,66 +49,42 @@
 //    canvas_initial.image(video, 0, 0, 750, 450);
 //    canvas_initial.endDraw();
 //    image(canvas_initial, 50, 50);
-    
+
 //  }
-  
+
 //}
 
-
-
-
-
-
-  
-  
 import processing.video.*;
 Movie myMovie;
 PGraphics pgFrame, pgConvolution;
 PImage piFrame;
 
-
-
-
-
-void grayscale(PImage original_image, PGraphics destination, int j){
-    
-    int average;
-    destination.beginDraw();
-    destination.loadPixels();
-    //System.out.println("Destination pixels");
-    //System.out.println(original_image.pixels.length);
-    //System.out.println(destination.pixels.length);
-    
-    for(int i = 0; i < original_image.pixels.length; i++){
-      average = ((int) red(original_image.pixels[i]) + (int) green(original_image.pixels[i]) + (int) blue(original_image.pixels[i]))/3;
-      destination.pixels[i] = color(average,average,average);
-    }
+void applyGrayScale(PImage originalImage, PGraphics destination, int j) {
+  int average = 0;
+  destination.beginDraw();
+  destination.loadPixels();
+  int[] imgPixels = originalImage.pixels;
+  for (int i = 0; i < imgPixels.length; i++) {
+    average = ((int) red(imgPixels[i]) + (int) green(imgPixels[i]) + (int) blue(imgPixels[i])) / 3;
+    destination.pixels[i] = color(average, average, average);
+  }
   destination.updatePixels();
   destination.endDraw();
-  image(pgFrame, 0, 500+j+j);
-  
+  image(pgFrame, 0, originalImage.height + 5);
 }
 
-
-
-void fill_pg(PGraphics pg, PImage original) {
-  for (int i = 0; i < pg.pixels.length; i++) {
-    pg.pixels[i] = original.pixels[i];
-  }
-}
-
-int get_location_pixel(int x, int y, int input_width) {    
+int getLocationPixel(int x, int y, int input_width) {    
   return y + (x * input_width);
 }
 
-int convolution_in_pixel(int[][] kernel, int initial_x, int initial_y, PImage img) {   
+int applyConvolutionToPixel(int[][] kernel, int initialX, int initialY, PImage originalImage) {   
   int redTotal = 0;
   int greenTotal = 0;
   int blueTotal = 0;
   int pixel = 0;
   for (int i = 0; i < kernel.length; i++) {
     for (int j = 0; j < kernel[0].length; j++) {
-      pixel = img.pixels[get_location_pixel(initial_x + i, initial_y + j, img.width)];
+      pixel = originalImage.pixels[getLocationPixel(initialX + i, initialY + j, originalImage.width)];
       redTotal += red(pixel) * kernel[i][j];
       greenTotal += green(pixel) * kernel[i][j];
       blueTotal += blue(pixel) * kernel[i][j];
@@ -121,21 +93,20 @@ int convolution_in_pixel(int[][] kernel, int initial_x, int initial_y, PImage im
   return color(redTotal, greenTotal, blueTotal);
 }
 
-void apply_convolution_mask(PImage img, int[][] kernel, PGraphics pg) {
-  int imgHeight = img.height;
-  int imgWidth = img.width;
+void applyConvolutionMask(PImage originalImage, int[][] kernel, PGraphics pg) {
+  int imgHeight = originalImage.height;
+  int imgWidth = originalImage.width;
   int lengthToEdge = kernel.length / 2;
   pg.beginDraw();
   pg.loadPixels();
   for (int x = lengthToEdge; x < imgHeight - lengthToEdge; x++) {
     for (int y = lengthToEdge; y < imgWidth - lengthToEdge; y++) {
-      pg.pixels[get_location_pixel(x, y, imgWidth)] = convolution_in_pixel(kernel, x - lengthToEdge, y - lengthToEdge, img);
+      pg.pixels[getLocationPixel(x, y, imgWidth)] = applyConvolutionToPixel(kernel, x - lengthToEdge, y - lengthToEdge, originalImage);
     }
   }
-  
   pg.updatePixels();
   pg.endDraw();
-  image(pg, 0, 500);
+  image(pg, 0, imgHeight + 5);
 }
 
 // Edge detection kernel
@@ -145,44 +116,29 @@ int[][] kernel = {
   {-1, -1, -1}
 };
 
-
-
-
 void setup() {
-  size(1200, 1200);
-  System.out.println(frameRate);
-  frameRate(30);
- 
-  myMovie = new Movie(this, "lizzy.mp4");
-  
-  System.out.println(myMovie.width);
-  System.out.println(myMovie.height);
+  size(1000, 800);
+  frameRate(60);
+
+  myMovie = new Movie(this, "transit.mov");
   myMovie.frameRate(60);
   myMovie.loop();
-  System.out.println(myMovie.width);
-  System.out.println(myMovie.height);
-  
-    
-    
-      
-  
- 
-  
-  
-
-  
 }
 
 void draw() {
   if (myMovie.available()) {
-
     myMovie.read();
-      pgFrame = createGraphics(myMovie.width, myMovie.height);
-      pgConvolution = createGraphics(myMovie.width, myMovie.height);
+    pgFrame = createGraphics(myMovie.width, myMovie.height);
+    pgConvolution = createGraphics(myMovie.width, myMovie.height);
+    System.out.println(myMovie.frameRate/30*100);
     System.out.println(frameRate);
   }
- //grayscale(myMovie, pgFrame, 30);
- 
-   apply_convolution_mask(myMovie, kernel, pgConvolution);
-  image(myMovie, 0, 0);
+  //applyGrayScale(myMovie, pgFrame, 30);
+      String frameRateText = "Eficiencia Computacional "+ frameRate/30*100 + "%";
+    fill(0);
+    textSize(12);
+    text(frameRateText, myMovie.width, 60);
+
+  image(myMovie, 0, 0);  
+  applyConvolutionMask(myMovie, kernel, pgConvolution);
 }
