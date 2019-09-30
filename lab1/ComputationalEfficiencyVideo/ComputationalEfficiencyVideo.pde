@@ -7,18 +7,10 @@ Button[] buttons = new Button[6];
 int inputFrameRate = 60, x_position = 10, position_original = 100, offset_destination = 10;
 int width_button_0 = 120, width_button_1 = 150, width_button_2 = 180, width_button_3 = 180, width_button_4 = 180, width_button_5 = 180, accumulated = 0, separation_buttons = 10;
 
-
-
-
-
-
-
-// Edge detection kernel
-
-
 float[][] sharpenKernel = { { -1, -1, -1 }, 
   { -1, 9, -1 }, 
   { -1, -1, -1 } };
+
 float k = 1.0/9;
 float[][] blurKernel = { { k, k, k }, 
   { k, k, k }, 
@@ -34,9 +26,7 @@ float[][] blurKernel5 = { { k, k, k, k, k },
   { k, k, k, k, k }, 
   { k, k, k, k, k }, };
 
-
 void setup() {
-
   size(1180, 1080);
   smooth();
   accumulated = 10;
@@ -56,21 +46,12 @@ void setup() {
   for (int i = 0; i < buttons.length; i++) {
     buttons[i].drawButton();
   }
-
-
-
   textSize(32);
 
-
-
-  System.out.println(frameRate);
   frameRate(inputFrameRate);
   movie_to_process = new Movie(this, "launch2.mp4");
   movie_to_process.frameRate(inputFrameRate);
-  
 }
-
-
 
 int position_destination = 50;
 void draw() {
@@ -78,12 +59,6 @@ void draw() {
   String title_2 = "Computational efficiency ";
   String title_3 = Float.toString(frameRate);
 
-
-
-  
-  
-  
-  
   loadPixels();
   fill(pixels[0]);
   rect(570, 275, 600, 100);
@@ -92,18 +67,16 @@ void draw() {
   text(title_1, 870, 500);
   text(title_2, 780, 300);
   text(title_3, 1075, 300);
-  
-  //fill(0, 102, 153, 51);
-  clearPgs();
+
   if (mousePressed==true) {
     System.out.println("j");
   }
+
   movie_to_process.loop();
   if (movie_to_process.available()) {
     movie_to_process.read();
     pgDestination = createGraphics(movie_to_process.width, movie_to_process.height);
   }
-
 
   if (buttons[0].mouseIsOver()) {
     applyLuma(movie_to_process, pgDestination);
@@ -128,12 +101,7 @@ void draw() {
   image(movie_to_process, x_position, position_original);
 }
 
-
-
-
-
 void mouseClicked() {
-  clearPgs();
 
   if (buttons[0].mouseIsOver()) {
     applyLuma(movie_to_process, pgDestination);
@@ -154,16 +122,4 @@ void mouseClicked() {
     apply_convolution_mask(movie_to_process, edgeKernel, pgDestination);
     image(pgDestination, pgDestination.width + x_position + offset_destination, pgDestination.width + offset_destination);
   }
-}
-
-void clearPgs() {
-  //pgDestination.beginDraw();
-  //pgDestination.clear();
-  //pgDestination.endDraw();
-  //pgConvolution.beginDraw();
-  //pgConvolution.clear();
-  //pgConvolution.endDraw();
-
-  //image(pg, 10, initialImg.height + 70);
-  //image(pgHistogram, initialImg.width+20, initialImg.height+70);
 }

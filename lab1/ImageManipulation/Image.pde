@@ -34,11 +34,24 @@ void segmentateByBrightnessThreshold(PImage initialImg, PImage destinationImg, i
   for (int i = 0; i < initialImg.width; i++) {
     for (int j = 0; j < initialImg.height; j++) {
       int bright = int(brightness(initialImg.get(i, j)));
-      if (histogram[bright] > interval && histogram[bright] < interval * 3) {
-        destinationImg.pixels[getLocationOfPixel(i, j, initialImg.width)] = initialImg.get(i, j);
+      int colorToApply;
+      if (histogram[bright] >= 0 && histogram[bright] < interval) {
+        colorToApply = color(255, 0,0);
+      } else if (histogram[bright] >= interval && histogram[bright] < interval * 2) {
+        colorToApply = color(0, 255,0);
+      } else if (histogram[bright] >= interval * 2 && histogram[bright] < interval * 3) {
+        colorToApply = color(0, 0, 255);
       } else {
-        destinationImg.pixels[getLocationOfPixel(i, j, initialImg.width)] = color(255);
+        colorToApply = initialImg.get(i, j);
       }
+      
+      //if (histogram[bright] > interval && histogram[bright] < interval * 3) {
+      //  colorToApply = initialImg.get(i, j);
+      //} else {
+      //  colorToApply = color(255);
+      //}
+      
+      destinationImg.pixels[getLocationOfPixel(i, j, initialImg.width)] = colorToApply;
     }
   }
   destinationImg.updatePixels();

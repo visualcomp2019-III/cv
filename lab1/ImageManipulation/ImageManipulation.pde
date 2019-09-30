@@ -1,4 +1,4 @@
-PImage initialImg; //<>//
+PImage initialImg; //<>// //<>// //<>//
 PGraphics pgTransformedImg, pgHistogram, pgSegmentation;
 
 Button[] buttons = new Button[7];

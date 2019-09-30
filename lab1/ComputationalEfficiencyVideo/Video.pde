@@ -1,20 +1,15 @@
-void applyAverageGrayScale(PImage original_image, PGraphics destination){
-    
-    int average;
-    destination.beginDraw();
-    destination.loadPixels();
+void applyAverageGrayScale(PImage original_image, PGraphics destination) {
+  int average;
+  destination.beginDraw();
+  destination.loadPixels();
 
-    
-    for(int i = 0; i < original_image.pixels.length; i++){
-      average = ((int) red(original_image.pixels[i]) + (int) green(original_image.pixels[i]) + (int) blue(original_image.pixels[i]))/3;
-      destination.pixels[i] = color(average,average,average);
-    }
+  for (int i = 0; i < original_image.pixels.length; i++) {
+    average = ((int) red(original_image.pixels[i]) + (int) green(original_image.pixels[i]) + (int) blue(original_image.pixels[i]))/3;
+    destination.pixels[i] = color(average, average, average);
+  }
   destination.updatePixels();
   destination.endDraw();
-  
 }
-
-
 
 int getLocationOfPixel(int x, int y, int input_width) {    
   return x + (y * input_width);
@@ -28,7 +23,7 @@ int applyLumaInPixel(int pixel) {
 }
 
 void applyLuma(PImage initialImg, PGraphics destionationImg) {
-   destionationImg.beginDraw();
+  destionationImg.beginDraw();
   destionationImg.loadPixels();
   for (int i = 0; i < initialImg.pixels.length; i++) {
     destionationImg.pixels[i] = applyLumaInPixel(initialImg.pixels[i]);
@@ -36,8 +31,6 @@ void applyLuma(PImage initialImg, PGraphics destionationImg) {
   destionationImg.updatePixels();
   destionationImg.endDraw();
 }
-
-
 
 void segmentateByBrightnessThreshold(PImage initialImg, PImage destinationImg, int[] histogram) {
   float interval = max(histogram) / 4;
@@ -56,12 +49,6 @@ void segmentateByBrightnessThreshold(PImage initialImg, PImage destinationImg, i
   }
   destinationImg.updatePixels();
 }
-
-
-
-
-
-
 
 void fill_pg(PGraphics pg, PImage original) {
   for (int i = 0; i < pg.pixels.length; i++) {
@@ -100,8 +87,7 @@ void apply_convolution_mask(PImage img, float[][] kernel, PGraphics pg) {
       pg.pixels[get_location_pixel(x, y, imgWidth)] = convolution_in_pixel(kernel, x - lengthToEdge, y - lengthToEdge, img);
     }
   }
-  
+
   pg.updatePixels();
   pg.endDraw();
-  //image(pg, 0, 500);
 }
