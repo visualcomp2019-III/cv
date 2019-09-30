@@ -14,7 +14,7 @@ void setup() {
   size(1180, 650);
   smooth();
 
-  initialImg = loadImage("../data/lizzy.png");
+  initialImg = loadImage("lizzy.png");
   INITIAL_IMG_HEIGHT = initialImg.height;
   INITIAL_IMG_WIDTH = initialImg.width;
 
