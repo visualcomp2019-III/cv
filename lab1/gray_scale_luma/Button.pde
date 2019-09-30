@@ -28,7 +28,6 @@ class Button {
   boolean mouseIsOver() {
     if (mouseX > xPosition && mouseX < (xPosition + widthButton) 
       && mouseY > yPosition && mouseY < (yPosition + heightButton)) {
-      
       return true;
     }
     return false;

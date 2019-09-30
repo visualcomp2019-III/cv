@@ -1,7 +1,31 @@
 PImage initialImg; //<>//
-PGraphics pg, pg2, pgLumaImg, pgHistogram, pgSegmentation;
+PGraphics pgTransformedImg, pgHistogram, pgSegmentation;
 
 Button[] buttons = new Button[7];
+
+// Edge detection kernel
+int[][] edgeKernel = {  
+  {-1, -1, -1}, 
+  {-1, 9, -1}, 
+  {-1, -1, -1}
+};
+
+// Gaussian blur kernel
+int[][] gaussianBlurKernel = {  
+  {1, 2, 1}, 
+  {2, 4, 2}, 
+  {1, 2, 1}
+};
+
+// Gaussian blur kernel
+int[][] unsharpMaskingKernel = {  
+  {1, 4, 6, 4, 1},
+  {4, 16, 24, 16, 4},
+  {6, 24, -476, 24, 6},
+  {4, 16, 24, 16, 4},
+  {1, 4, 6, 4, 1},
+};
+
 
 // ----------------------------------------
 void setup() {
@@ -21,13 +45,10 @@ void setup() {
   for (int i = 0; i < buttons.length; i++) {
     buttons[i].drawButton();
   }
-
-  pg = createGraphics(initialImg.width, initialImg.height);
-  pg2 = createGraphics(initialImg.width, initialImg.height);
-  pgLumaImg = createGraphics(initialImg.width, initialImg.height);
+  
+  pgTransformedImg = createGraphics(initialImg.width, initialImg.height);
   pgHistogram = createGraphics(initialImg.width, initialImg.height);
   pgSegmentation = createGraphics(initialImg.width, initialImg.height);
-
   image(initialImg, 10, 60);
 }
 
@@ -38,53 +59,67 @@ void draw() {
 void mouseClicked() {
   clearPgs();
   if (buttons[0].mouseIsOver()) {
-    pg.beginDraw();
-    applyLuma(initialImg, pg);
-    pg.endDraw();
-    image(pg, 10, initialImg.height + 70);
+    pgTransformedImg.beginDraw();
+    applyLuma(initialImg, pgTransformedImg);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height + 70);
   } else if (buttons[1].mouseIsOver()) {
-    pg.beginDraw();
-    applyAverageGrayScale(initialImg, pg);
-    pg.endDraw();
-    image(pg, 10, initialImg.height+70);
+    pgTransformedImg.beginDraw();
+    applyAverageGrayScale(initialImg, pgTransformedImg);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
   } else if (buttons[2].mouseIsOver()) {
-    pg.beginDraw();
-    applyAverageGrayScale(initialImg, pg);
-    pg.endDraw();
-    image(pg, 10, initialImg.height+70);
+    pgTransformedImg.beginDraw();
+    applyAverageGrayScale(initialImg, pgTransformedImg);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
     pgHistogram.beginDraw();
-    Histogram histogram = new Histogram(pg);
+    Histogram histogram = new Histogram(pgTransformedImg);
     histogram.generateHistogram();
     histogram.drawHistogramInPg(pgHistogram);
     pgHistogram.endDraw();
     image(pgHistogram, initialImg.width+20, initialImg.height+70);
   } else if (buttons[3].mouseIsOver()) {
-    pg.beginDraw();
-    applyAverageGrayScale(initialImg, pg);
-    pg.endDraw();
-    image(pg, 10, initialImg.height+70);
+    pgTransformedImg.beginDraw();
+    applyAverageGrayScale(initialImg, pgTransformedImg);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
     pgHistogram.beginDraw();
-    Histogram histogram = new Histogram(pg);
+    Histogram histogram = new Histogram(pgTransformedImg);
     histogram.generateHistogram();
     histogram.drawHistogramInPg(pgHistogram);
     pgHistogram.endDraw();
     image(pgHistogram, initialImg.width+20, initialImg.height+70);
     pgSegmentation.beginDraw();
-    segmentateByBrightnessThreshold(pg, pgSegmentation, histogram.getHistogram());
+    segmentateByBrightnessThreshold(pgTransformedImg, pgSegmentation, histogram.getHistogram());
     pgSegmentation.endDraw();
     image(pgSegmentation, 10, initialImg.height * 2 + 80);
+  } else if (buttons[4].mouseIsOver()) {
+    pgTransformedImg.beginDraw();
+    convoluteImage(initialImg, pgTransformedImg, edgeKernel, 1);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
+  } else if (buttons[5].mouseIsOver()) {
+    pgTransformedImg.beginDraw();
+    convoluteImage(initialImg, pgTransformedImg, gaussianBlurKernel, 16);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
+  } else if (buttons[6].mouseIsOver()) {
+    pgTransformedImg.beginDraw();
+    convoluteImage(initialImg, pgTransformedImg, unsharpMaskingKernel, -256);
+    pgTransformedImg.endDraw();
+    image(pgTransformedImg, 10, initialImg.height+70);
   }
-  
 }
 
 void clearPgs() {
-  pg.beginDraw();
-  pg.clear();
-  pg.endDraw();
+  pgTransformedImg.beginDraw();
+  pgTransformedImg.clear();
+  pgTransformedImg.endDraw();
   pgHistogram.beginDraw();
   pgHistogram.clear();
   pgHistogram.endDraw();
-  
-  image(pg, 10, initialImg.height + 70);
+
+  image(pgTransformedImg, 10, initialImg.height + 70);
   image(pgHistogram, initialImg.width+20, initialImg.height+70);
 }
