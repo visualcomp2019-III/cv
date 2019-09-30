@@ -4,7 +4,7 @@ Movie movie_to_process;
 PGraphics pgDestination, pgConvolution;
 PImage piFrame;
 Button[] buttons = new Button[6];
-int inputFrameRate = 30, x_position = 10, position_original = 100, offset_destination = 10;
+int inputFrameRate = 60, x_position = 10, position_original = 100, offset_destination = 10;
 int width_button_0 = 120, width_button_1 = 150, width_button_2 = 180, width_button_3 = 180, width_button_4 = 180, width_button_5 = 180, accumulated = 0, separation_buttons = 10;
 
 
@@ -56,27 +56,44 @@ void setup() {
   for (int i = 0; i < buttons.length; i++) {
     buttons[i].drawButton();
   }
-  String s = "Click on the filter to capture a frame";
+
 
 
   textSize(32);
 
-  fill(0, 102, 153);
-  text(s, 870, 500);
-  fill(0, 102, 153, 51);
+
 
   System.out.println(frameRate);
   frameRate(inputFrameRate);
   movie_to_process = new Movie(this, "launch2.mp4");
   movie_to_process.frameRate(inputFrameRate);
+  
 }
 
 
 
 int position_destination = 50;
 void draw() {
+  String title_1 = "Click on the filter to capture a frame";
+  String title_2 = "Computational efficiency ";
+  String title_3 = Float.toString(frameRate);
 
 
+
+  
+  
+  
+  
+  loadPixels();
+  fill(pixels[0]);
+  rect(570, 275, 600, 100);
+
+  fill(0, 102, 153);
+  text(title_1, 870, 500);
+  text(title_2, 780, 300);
+  text(title_3, 1075, 300);
+  
+  //fill(0, 102, 153, 51);
   clearPgs();
   if (mousePressed==true) {
     System.out.println("j");
