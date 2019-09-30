@@ -1,97 +1,14 @@
-
-//import processing.video.*;
-
-
-//PGraphics canvas_initial;
-//PGraphics canvas_trans;
-
-//Movie video;
-
-//int initialFrameRate = 60;
-
-//boolean showVideo = true;
-
-
-//void movieEvent(Movie m) {
-//  m.read();
-//}
-
-
-//void chargeMedia(boolean media, PGraphics canvas) {
-//  canvas.beginDraw();
-//  if (media) {
-//    video = new Movie(this, "transit.mov");
-//    canvas.image(video, 0, 0, video.height, video.width);
-//    video.play();
-//    video.loop();
-//  } 
-//  canvas.endDraw();
-//  image(canvas, 510, 510);
-//}
-//void setup() {
-//   size(1000, 1000);
-//  background(0);
-//    canvas_initial = createGraphics(1960, 1540);
-//    chargeMedia(showVideo, canvas_initial);
-    
-//}
-
-//void draw(){
-//    if (video.available()) {
-//    pushStyle();
-//    stroke(255);
-//    rectMode(CORNER);
-//    fill(255);
-//    rect(50, 500, 900, 40);
-//    popStyle();
-
-//    String frameRateText = "Eficiencia Computacional "+ frameRate/initialFrameRate*100 + "%";
-//    textSize(18);
-//    text(frameRateText, 50, 520);
-//    video.read();
-//    canvas_initial.beginDraw();
-//    canvas_initial.image(video, 0, 0, 750, 450);
-//    canvas_initial.endDraw();
-//    image(canvas_initial, 50, 50);
-    
-//  }
-  
-//}
-
-
-
-
-
-
-  
-  
 import processing.video.*;
-Movie myMovie;
-PGraphics pgFrame, pgConvolution;
+
+Movie movie_to_process;
+PGraphics pgGrayScale, pgConvolution;
 PImage piFrame;
+Button[] buttons = new Button[6];
+int inputFrameRate = 30;
 
 
 
 
-
-void grayscale(PImage original_image, PGraphics destination, int j){
-    
-    int average;
-    destination.beginDraw();
-    destination.loadPixels();
-    //System.out.println("Destination pixels");
-    //System.out.println(original_image.pixels.length);
-    //System.out.println(destination.pixels.length);
-    
-    for(int i = 0; i < original_image.pixels.length; i++){
-      average = ((int) red(original_image.pixels[i]) + (int) green(original_image.pixels[i]) + (int) blue(original_image.pixels[i]))/3;
-      destination.pixels[i] = color(average,average,average);
-    }
-  destination.updatePixels();
-  destination.endDraw();
-  image(pgFrame, 0, 500+j+j);
-  
-}
 
 
 
@@ -135,7 +52,7 @@ void apply_convolution_mask(PImage img, int[][] kernel, PGraphics pg) {
   
   pg.updatePixels();
   pg.endDraw();
-  image(pg, 0, 500);
+  //image(pg, 0, 500);
 }
 
 // Edge detection kernel
@@ -149,40 +66,128 @@ int[][] kernel = {
 
 
 void setup() {
-  size(1200, 1200);
+  
+  size(1180, 1080);
+  smooth();
+  
+  buttons[0] = new Button("Luma gray scale", 10, 5, 100, 50);
+  buttons[1] = new Button("Average gray scale", 110, 5, 130, 50);
+  buttons[2] = new Button("Segmentated Image Histogram", 370, 5, 190, 50);
+  buttons[3] = new Button("Edge detection Convolution", 560, 5, 190, 50);
+  buttons[4] = new Button("Gaussian Blur Convolution", 750, 5, 190, 50);
+  buttons[5] = new Button("Unsharp masking Convolution", 940, 5, 190, 50);
+
+  for (int i = 0; i < buttons.length; i++) {
+    buttons[i].drawButton();
+  }
+
   System.out.println(frameRate);
-  frameRate(30);
- 
-  myMovie = new Movie(this, "lizzy.mp4");
-  
-  System.out.println(myMovie.width);
-  System.out.println(myMovie.height);
-  myMovie.frameRate(60);
-  myMovie.loop();
-  System.out.println(myMovie.width);
-  System.out.println(myMovie.height);
-  
-    
-    
-      
-  
- 
-  
+  frameRate(inputFrameRate);
+  movie_to_process = new Movie(this, "launch2.mp4");
+  movie_to_process.frameRate(inputFrameRate);
   
 
   
 }
+int active = 0;
+
+
 
 void draw() {
-  if (myMovie.available()) {
-
-    myMovie.read();
-      pgFrame = createGraphics(myMovie.width, myMovie.height);
-      pgConvolution = createGraphics(myMovie.width, myMovie.height);
-    System.out.println(frameRate);
+  
+  
+  clearPgs();
+  if(mousePressed==true){
+    System.out.println("j");
   }
- //grayscale(myMovie, pgFrame, 30);
- 
-   apply_convolution_mask(myMovie, kernel, pgConvolution);
-  image(myMovie, 0, 0);
+  movie_to_process.loop();
+  if (movie_to_process.available()) {
+    movie_to_process.read();
+    pgGrayScale = createGraphics(movie_to_process.width, movie_to_process.height);
+    //pgConvolution = createGraphics(movie_to_process.width, movie_to_process.height);
+  }
+  
+  
+    if (buttons[0].mouseIsOver()) {
+  grayscale(movie_to_process, pgGrayScale);
+  image(pgGrayScale, 0, 500);
+  }else if (buttons[1].mouseIsOver()) {
+    apply_convolution_mask(movie_to_process, kernel, pgGrayScale);
+    image(pgGrayScale, 0, 500);
+  }else if(buttons[5].mouseIsOver()){
+    System.out.println("gususu");
+    applyLuma(movie_to_process, pgGrayScale);
+    image(pgGrayScale, 0, 500);
+  }
+  
+  image(movie_to_process, 0, 100);
+  
+}
+
+
+
+
+
+void mouseClicked() {
+  clearPgs();
+  
+  if (buttons[0].mouseIsOver()) {
+  if (movie_to_process.available()) {
+    movie_to_process.read();
+    pgGrayScale = createGraphics(movie_to_process.width, movie_to_process.height);
+    pgConvolution = createGraphics(movie_to_process.width, movie_to_process.height);
+  }
+  grayscale(movie_to_process, pgGrayScale);
+  image(movie_to_process, 0, 100);
+  image(pgGrayScale, 0, 500);
+  } else if (buttons[1].mouseIsOver()) {
+    if (movie_to_process.available()) {
+      movie_to_process.read();
+      pgGrayScale = createGraphics(movie_to_process.width, movie_to_process.height);
+      pgConvolution = createGraphics(movie_to_process.width, movie_to_process.height);
+    }
+    apply_convolution_mask(movie_to_process, kernel, pgConvolution);
+    image(movie_to_process, 0, 100);
+    image(pgGrayScale, 0, 500);
+  }
+  //} else if (buttons[2].mouseIsOver()) {
+  //  pg.beginDraw();
+  //  applyAverageGrayScale(initialImg, pg);
+  //  pg.endDraw();
+  //  image(pg, 10, initialImg.height+70);
+  //  pgHistogram.beginDraw();
+  //  Histogram histogram = new Histogram(pg);
+  //  histogram.generateHistogram();
+  //  histogram.drawHistogramInPg(pgHistogram);
+  //  pgHistogram.endDraw();
+  //  image(pgHistogram, initialImg.width+20, initialImg.height+70);
+  //} else if (buttons[3].mouseIsOver()) {
+  //  pg.beginDraw();
+  //  applyAverageGrayScale(initialImg, pg);
+  //  pg.endDraw();
+  //  image(pg, 10, initialImg.height+70);
+  //  pgHistogram.beginDraw();
+  //  Histogram histogram = new Histogram(pg);
+  //  histogram.generateHistogram();
+  //  histogram.drawHistogramInPg(pgHistogram);
+  //  pgHistogram.endDraw();
+  //  image(pgHistogram, initialImg.width+20, initialImg.height+70);
+  //  pgSegmentation.beginDraw();
+  //  segmentateByBrightnessThreshold(pg, pgSegmentation, histogram.getHistogram());
+  //  pgSegmentation.endDraw();
+  //  image(pgSegmentation, 10, initialImg.height * 2 + 80);
+  //}
+  
+}
+
+void clearPgs() {
+  //pgGrayScale.beginDraw();
+  //pgGrayScale.clear();
+  //pgGrayScale.endDraw();
+  //pgConvolution.beginDraw();
+  //pgConvolution.clear();
+  //pgConvolution.endDraw();
+  
+  //image(pg, 10, initialImg.height + 70);
+  //image(pgHistogram, initialImg.width+20, initialImg.height+70);
 }
