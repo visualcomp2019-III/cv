@@ -1,10 +1,6 @@
 PImage img;
 PGraphics pg;
 
-int convolution_mask(int a, int b) {
-  return 5;
-}
-
 void transformImgToGrayScale() {
   pg.loadPixels();
   int average;

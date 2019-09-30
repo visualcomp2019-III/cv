@@ -56,6 +56,7 @@
 
 import processing.video.*;
 Movie myMovie;
+Button button;
 PGraphics pgFrame, pgConvolution;
 PImage piFrame;
 
@@ -123,9 +124,11 @@ void setup() {
   myMovie = new Movie(this, "transit.mov");
   myMovie.frameRate(60);
   myMovie.loop();
+  button = new Button("Click Me", 20, 20, 100, 50);
 }
 
 void draw() {
+  button.drawButton();
   if (myMovie.available()) {
     myMovie.read();
     pgFrame = createGraphics(myMovie.width, myMovie.height);
@@ -139,6 +142,6 @@ void draw() {
   textSize(12);
   text(frameRateText, myMovie.width, 60);
 
-  image(myMovie, 0, 0);  
+  //image(myMovie, 0, 0);  
   applyConvolutionMask(myMovie, kernel, pgConvolution);
 }
