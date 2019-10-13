@@ -10,12 +10,21 @@ class Illusion3 {
   int contrast;
   int[] colors = new int[arcs];
   int rate;
+  boolean beingDrawn = false;
 
   Illusion3(PGraphics pg, int initialContrast, int initialRate) {
     this.pg = pg;
     this.contrast = initialContrast;
     this.rate = initialRate;
     loadColors();
+  }
+
+  void setBeingDrawn(boolean value) {
+    beingDrawn = value;
+  }
+
+  boolean isBeingDrawn() {
+    return beingDrawn;
   }
 
   void setContrast(int value) {

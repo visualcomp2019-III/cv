@@ -12,8 +12,6 @@ final int IMAGE_TOP_PADDING = BUTTON_HEIGHT + 20;
 int INITIAL_IMG_HEIGHT = 500;
 int INITIAL_IMG_WIDTH = 500;
 
-boolean paintingIllusion3 = false;
-
 Illusion3 illusion3;
 
 void setup() {
@@ -31,7 +29,7 @@ void setup() {
 }
 
 void draw() {
-  if (paintingIllusion3) {
+  if (illusion3.isBeingDrawn()) {
     frameRate(illusion3.rate);
     illusion3.setContrast((int)hs1.getPos() / 10);
     illusion3.drawIllusion();
@@ -43,7 +41,7 @@ void draw() {
 }
 
 void keyPressed() {
-  if (paintingIllusion3) {
+  if (illusion3.isBeingDrawn()) {
     if (keyCode == UP) illusion3.increaseRate(); 
     else if (keyCode == DOWN) illusion3.decrementRate();
   }
@@ -51,12 +49,12 @@ void keyPressed() {
 
 void mouseClicked() {
   clearAllPgs();
-  paintingIllusion3 = false;
+  illusion3.setBeingDrawn(false);
 
   if (buttons[0].mouseIsOver()) {
     drawFirstIlussion(pgVisualIlussion);
   } else if (buttons[1].mouseIsOver()) {   
-    paintingIllusion3 = true;
+    illusion3.setBeingDrawn(true);
   } else if (buttons[2].mouseIsOver()) {
     //displayHistogram();
   } else if (buttons[3].mouseIsOver()) {
