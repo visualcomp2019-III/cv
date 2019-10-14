@@ -13,6 +13,10 @@ int INITIAL_IMG_HEIGHT = 500;
 int INITIAL_IMG_WIDTH = 500;
 
 Illusion3 illusion3;
+Illusion4 illusion4;
+Illusion5 illusion5;
+
+int currentIllusion = 0;
 
 void setup() {
   size(1200, 700);
@@ -23,25 +27,32 @@ void setup() {
   createButtons();
   drawAllButtons();
 
-  pg = createGraphics(500, 500);
+  pg = createGraphics(750, 700);
   hs1 = new HScrollbar(120, 620, 300, 16, 2);
   illusion3 = new Illusion3(pg, 0, 15);
+  illusion4 = new Illusion4(pg, 500, 100, 60, 110, 6, color(0), color(200));
+  illusion5 = new Illusion5(pg, 200, 200, 150.0, 13);
+  image(pg, 50, 120);
 }
 
+float speed = frameCount / 150.0;
+int points = 13;
 void draw() {
-  if (illusion3.isBeingDrawn()) {
+  if (currentIllusion == 3) {
     frameRate(illusion3.rate);
     illusion3.setContrast((int)hs1.getPos() / 10);
     illusion3.drawIllusion();
-    image(pg, 120, 120);
+    image(pg, 50, 120);
     stroke(160);
     hs1.update();
     hs1.display();
+  } else if (currentIllusion == 5) {
+    illusion5.drawIllusion();
   }
 }
 
 void keyPressed() {
-  if (illusion3.isBeingDrawn()) {
+  if (currentIllusion == 3) {
     if (keyCode == UP) illusion3.increaseRate(); 
     else if (keyCode == DOWN) illusion3.decrementRate();
   }
@@ -49,20 +60,23 @@ void keyPressed() {
 
 void mouseClicked() {
   clearAllPgs();
-  illusion3.setBeingDrawn(false);
+
+  currentIllusion = 0;
 
   if (buttons[0].mouseIsOver()) {
     drawFirstIlussion(pgVisualIlussion);
-  } else if (buttons[1].mouseIsOver()) {   
-    illusion3.setBeingDrawn(true);
+  } else if (buttons[1].mouseIsOver()) {
   } else if (buttons[2].mouseIsOver()) {
-    //displayHistogram();
+    frameRate(15);
+    currentIllusion = 3;
   } else if (buttons[3].mouseIsOver()) {
-    //displaySegmentatedImage();
+    illusion4.drawIllusion();
+    image(pg, 50, 120);
+    currentIllusion = 4;
   } else if (buttons[4].mouseIsOver()) {
-    //displayEdgeDetectionConvolution();
+    frameRate(60);
+    currentIllusion = 5;
   } else if (buttons[5].mouseIsOver()) {
-    //displayGaussianBlurConvolution();
   }
 
   displayAllPgs();
