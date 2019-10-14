@@ -1,3 +1,6 @@
+/** 
+ * Illusion based on: https://michaelbach.de/ot/mot-kaleidoscope/index.html
+ */
 class Illusion5 {
   float rateRotation;
   int points;
@@ -44,7 +47,9 @@ class Illusion5 {
     star(0, 0, radius1, radius2);  
     popMatrix();
   }
-
+  
+  
+  // Function taken from: https://processing.org/examples/star.html
   void star(float x, float y, float radius1, float radius2) {
     float angle = TWO_PI / points;
     float halfAngle = angle / 2.0;

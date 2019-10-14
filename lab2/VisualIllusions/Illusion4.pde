@@ -1,7 +1,6 @@
 /** 
  * Illusion based on: https://michaelbach.de/ot/lum-diamond/index.html
  */
-
 class Illusion4 {
   private float diamondHeight;
   private float halfHeight;
