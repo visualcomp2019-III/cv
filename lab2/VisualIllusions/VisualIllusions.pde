@@ -1,9 +1,9 @@
-// https://michaelbach.de/ot/ang-tiltedTable/index.html
+// 1 https://michaelbach.de/ot/ang-tiltedTable/index.html
 PGraphics pgVisualIlussion, pg;
 
 HScrollbar hs1;
 
-final int TOTAL_BUTTONS = 6; 
+final int TOTAL_BUTTONS = 6;
 Button[] buttons = new Button[TOTAL_BUTTONS];
 
 final int BUTTON_HEIGHT = 50;
@@ -59,11 +59,11 @@ void keyPressed() {
 }
 
 void mouseClicked() {
-  clearAllPgs();
 
   currentIllusion = 0;
 
   if (buttons[0].mouseIsOver()) {
+    pgToClear(pgVisualIlussion);
     drawFirstIlussion(pgVisualIlussion);
   } else if (buttons[1].mouseIsOver()) {
   } else if (buttons[2].mouseIsOver()) {
@@ -82,34 +82,42 @@ void mouseClicked() {
   displayAllPgs();
 }
 
-void drawFirstIlussion(PGraphics destination) {
-  //Link: https://michaelbach.de/ot/ang-tiltedTable/index.html
-  destination.beginDraw();
-  destination.loadPixels();
-  int initialX = 80;
-  int initialY = 100;
-  int widthRectangle = 800;
-  int heightRectangle = 75;
-  int widthLine = 4;
-  int radius = 10;
-  int gapBetweenRectangles = 200;
-  int initialXSecondRectangle = widthRectangle / 2 + initialX -  (widthRectangle / 4);
-  int initialYSecondRectangle = initialY + heightRectangle + radius;
-  fill(255);
-  rect(initialX, initialY, widthRectangle, heightRectangle);
-  ellipse(widthRectangle / 2 + initialX, initialY + heightRectangle + (radius / 2), radius, radius);
+void drawFirstIlussion(PGraphics destination){
+   //Link: https://michaelbach.de/ot/ang-tiltedTable/index.html
+   destination.beginDraw();
+   destination.loadPixels();
+   int initialX = 80;
+   int initialY = 100;
+   int widthRectangle = 800;
+   int heightRectangle = 75;
+   int widthLine = 4;
+   int radius = 10;
+   int gapBetweenRectangles = 200;
+   int initialXSecondRectangle = widthRectangle / 2 + initialX -  (widthRectangle / 4);
+   int initialYSecondRectangle = initialY + heightRectangle + radius;
+   fill(255);
+   rect(initialX, initialY, widthRectangle, heightRectangle);
+   fill(0);
+   ellipse(widthRectangle / 2 + initialX, initialY + heightRectangle + (radius / 2) , radius, radius);
+   fill(255);
+   rect(initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
+   // Draw a rectangle in the worst possible way
+   //rect(initialX, initialY, widthLine, heightRectangle);
+   //rect(initialX, initialY, widthRectangle, widthLine);
+   //rect(initialX + widthRectangle, initialY, widthLine, heightRectangle );
+   ////rect(initialX, initialY + heightRectangle, widthRectangle, widthLine  );
 
-  rect(initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);   
-
-  boolean drawLeftToRight = false;
-  int gap = 12;
-  drawInternalLines(drawLeftToRight, gap, initialX, initialY, widthRectangle, heightRectangle);
-  drawInternalLines(!drawLeftToRight, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
 
 
-  //rect(40,100,4,100);
-  //rect(40,100,4,100);
-  destination.endDraw();
+   boolean drawLeftToRight = false;
+   int gap = 12;
+   drawInternalLines(drawLeftToRight, gap, initialX, initialY, widthRectangle, heightRectangle);
+   drawInternalLines(!drawLeftToRight, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
+
+
+   //rect(40,100,4,100);
+   //rect(40,100,4,100);
+   destination.endDraw();
 }
 
 // If the orientation is true, lines are draw from left to right
@@ -262,13 +270,49 @@ void drawInternalLines(boolean orientation, int gap, int initialX, int initialY,
 }
 
 
-void drawSecondIllusion() {
+void drawSecondIllusion(PGraphics destination){
+
+  destination.beginDraw();
+  destination.loadPixels();
+  int initialX = 80;
+  int initialY = 100;
+  int heightLine = 250;
+  int separation = 40;
+  strokeWeight(4);
+  int inclination = 200, inclination2 = -50, inclination3 = 200;
+  pushStyle();
+  noFill();
+  curve(initialX, initialY - inclination, initialX, initialY + heightLine, initialX + separation * 4, initialY + heightLine, initialX + separation * 4, initialY - inclination);
+  curve(initialX, initialY - inclination2, initialX + separation * 1, initialY + heightLine, initialX + separation * 3, initialY + heightLine, initialX + separation * 3, initialY - inclination2);
+  //curve(initialX + separation * 2 - 10, initialY, initialX + separation * 2 - 10, initialY + heightLine + 55, initialX + separation * 5, initialY + heightLine, initialX + separation * 5, initialY);
+  curve(initialX + separation * 2 - 10, initialY+170, initialX + separation * 2 - 10, initialY + heightLine + 55, initialX + separation * 5, initialY + heightLine, initialX + 50, initialY - 50);
+
+
+  curve(initialX+ separation * 2 , initialY + inclination3, initialX + separation * 2, initialY + heightLine, initialX + (separation * 3) - (separation / 2), initialY + heightLine + 20, initialX + (separation * 3) - (separation / 2), initialY + 20 + inclination3);
+  popStyle();
+  pushStyle();
+  noFill();
+  circle(initialX + separation/2, initialY,  separation );
+  circle(initialX + + separation * 2  + separation/2, initialY,  separation );
+  circle(initialX + + separation * 4  + separation/2, initialY,  separation );
+  popStyle();
+  for(int i = 0; i <= 5; i++){
+    line(initialX + separation * i, initialY , initialX  + separation * i, initialY + heightLine);
+    pushStyle();
+    noFill();
+    //arc(initialX + separation * i, initialY + heightLine, 200, 200, HALF_PI, PI);
+
+    popStyle();
+  }
+  destination.endDraw();
+
+
 }
 
 void createButtons() {
   //Set width of the buttons
   int accumulatedWidth = 10, buttonsGap = 10;
-  String[] titleButtons = {"Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"}; 
+  String[] titleButtons = {"Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"};
   int[] widthButtons = {120, 120, 120, 120, 120, 120};
 
   for (int i = 0; i < TOTAL_BUTTONS; i++) {
@@ -287,18 +331,13 @@ void displayAllPgs() {
 }
 
 
-void clearAllPgs() {
-  //pgTransformedImg.beginDraw();
-  //clearPg(pgTransformedImg);
-  //pgTransformedImg.endDraw();
+void pgToClear(PGraphics pgToClear) {
+  pgToClear.beginDraw();
+  pgToClear.loadPixels();
+  clearPg(pgToClear);
+  pgToClear.updatePixels();
+  pgToClear.endDraw();
 
-  //pgHistogram.beginDraw();
-  //clearPg(pgHistogram);
-  //pgHistogram.endDraw();
-
-  //pgSegmentation.beginDraw();
-  //clearPg(pgSegmentation);
-  //pgSegmentation.endDraw();
 }
 
 void clearPg(PImage pgToClear) {
