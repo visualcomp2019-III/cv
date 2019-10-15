@@ -13,7 +13,10 @@ class HScrollbar {
   boolean locked;
   float ratio;
 
-  HScrollbar (float barXPosition, float barYPosition, int barWidth, int barHeight, int heaviness) {
+  String rightLabel;
+  String leftLabel;
+
+  HScrollbar (float barXPosition, float barYPosition, int barWidth, int barHeight, int heaviness, String rightLabel, String leftLabel) {
     this.barWidth = barWidth;
     this.barHeight = barHeight;
     int widthtoheight = barWidth - barHeight;
@@ -26,6 +29,8 @@ class HScrollbar {
     sliderPositionMin = barXPosition;
     sliderPositionMax = barXPosition + barWidth - barHeight;
     this.heaviness = heaviness;
+    this.rightLabel = rightLabel;
+    this.leftLabel = leftLabel;
   }
 
   void update() {
@@ -61,8 +66,14 @@ class HScrollbar {
     }
   }
 
+  void displayText(String label, float xPosition, float yPosition) {
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text(label, xPosition, yPosition );
+  }
+
   void display() {
-    //pg.beginDraw();
+    displayText(this.leftLabel, barXPosition - 10, barYPosition + (barHeight / 2));
     fill(204);
     rect(barXPosition, barYPosition, barWidth, barHeight);
     if (over || locked) {
@@ -71,12 +82,10 @@ class HScrollbar {
       fill(102, 102, 102);
     }
     rect(sliderPosition, barYPosition, barHeight, barHeight);
-    //pg.endDraw();
+    displayText(this.rightLabel, barXPosition + barWidth + 15, barYPosition + (barHeight / 2));
   }
 
   float getPos() {
-    // Convert sliderPosition to be values between
-    // 0 and the total width of the scrollbar
     return (sliderPosition - initialXPosition) * ratio;
   }
 }
