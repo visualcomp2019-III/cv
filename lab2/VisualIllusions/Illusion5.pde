@@ -15,6 +15,14 @@ class Illusion5 {
     this.rateRotation = rateRotation;
     this.points = points;
   }
+  
+  void increaseSpeed(){
+    if(this.rateRotation > 10) this.rateRotation -= 10;
+  }
+  
+  void decreaseSpeed(){
+    if(this.rateRotation < 500) this.rateRotation += 10;
+  }
 
   void drawIllusion() {
     int gap = 18;

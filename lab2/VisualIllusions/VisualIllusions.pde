@@ -55,6 +55,9 @@ void keyPressed() {
   if (currentIllusion == 3) {
     if (keyCode == UP) illusion3.increaseRate(); 
     else if (keyCode == DOWN) illusion3.decrementRate();
+  } else   if (currentIllusion == 5) {
+    if (keyCode == UP) illusion5.increaseSpeed(); 
+    else if (keyCode == DOWN) illusion5.decreaseSpeed();
   }
 }
 
