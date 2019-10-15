@@ -3,6 +3,7 @@ PGraphics pgVisualIlussion;
 final int TOTAL_BUTTONS = 6;
 Button[] buttons = new Button[TOTAL_BUTTONS];
 Button changeOrientation;
+Button drawLines;
 
 final int BUTTON_HEIGHT = 50;
 int PG_ILLUSION_HEIGHT = 600;
@@ -26,7 +27,7 @@ void setup() {
   createButtons();
   drawAllButtons();
 
-  illusion1 = new Illusion1(pgVisualIlussion, true);
+  illusion1 = new Illusion1(pgVisualIlussion, true, true);
   illusion2 = new Illusion2(pgVisualIlussion);
   illusion3 = new Illusion3(pgVisualIlussion, 0, 15);
   illusion4 = new Illusion4(pgVisualIlussion, 500, 100, 60, 110, 6, color(0), color(200));
@@ -48,7 +49,7 @@ void draw() {
   } else if (currentIllusion == 5) {
     illusion5.drawIllusion();
   } else if (currentIllusion == 6) {
-    illusion6.drawIllusion();
+    //illusion6.drawIllusion();
   }
 }
 
@@ -70,6 +71,7 @@ void mouseClicked() {
     pgToClear(pgVisualIlussion);
     illusion1.drawIllusion();
     changeOrientation.drawButton();
+    drawLines.drawButton();
     currentIllusion = 1;
   } else if (buttons[1].mouseIsOver()) {
     currentIllusion = 2;
@@ -89,6 +91,12 @@ void mouseClicked() {
   if(changeOrientation.mouseIsOver()){
     illusion1.orientation = !illusion1.orientation;
     illusion1.drawIllusion();
+    currentIllusion = 1;
+  }
+    if(drawLines.mouseIsOver()){
+    illusion1.drawLines = !illusion1.drawLines;
+    illusion1.drawIllusion();
+    currentIllusion = 1;
   }
   image(pgVisualIlussion, 50, 80);
 }
@@ -104,7 +112,8 @@ void createButtons() {
     accumulatedWidth += buttonsGap + widthButtons[i];
   }
   
-  changeOrientation = new Button("Cambiar orientacion", 850, 5, 200, 50);
+  changeOrientation = new Button("Cambiar orientacion", 850, 5, 150, 50);
+  drawLines = new Button("Quitar lineas", 1000, 5, 150, 50);
   
   
 }

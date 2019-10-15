@@ -6,9 +6,11 @@ class Illusion1 {
 
   PGraphics destination; 
   boolean orientation;
-  Illusion1(PGraphics destination, boolean orientation) {
+  boolean drawLines;
+  Illusion1(PGraphics destination, boolean orientation, boolean drawLines) {
     this.destination = destination;
     this.orientation = orientation;
+    this.drawLines = drawLines;
   }
 
   void drawIllusion() {
@@ -18,30 +20,41 @@ class Illusion1 {
     int initialX = 80;
     int initialY = 100;
     int widthRectangle = 800;
-    int heightRectangle = 75;
+    //If you touch this value without being a multiple of the gap, you will lost contact to the earth and will suffer inevitable pains and sufferings.
+    int heightRectangle = 48;
     int widthLine = 4;
-    int radius = 10;
+    int radius = 13;
     int gapBetweenRectangles = 200;
     int initialXSecondRectangle = widthRectangle / 2 + initialX -  (widthRectangle / 4);
     int initialYSecondRectangle = initialY + heightRectangle + radius;
+    pushStyle();
     fill(255);
-    rect(initialX, initialY, widthRectangle, heightRectangle);
+    stroke(0);
+    strokeWeight(5);
+    
+    rect(initialX, initialY, widthRectangle+5, heightRectangle);
+      rect(initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2 + 7, heightRectangle*2);
+    popStyle();
     fill(0);
     ellipse(widthRectangle / 2 + initialX, initialY + heightRectangle + (radius / 2), radius, radius);
-    fill(255);
-    rect(initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
+    
+  
 
 
     int gap = 12;
-    drawInternalLines(orientation, gap, initialX, initialY, widthRectangle, heightRectangle);
-    drawInternalLines(!orientation, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
-
+    if(drawLines){
+      drawInternalLines(orientation, gap, initialX, initialY, widthRectangle, heightRectangle);
+      drawInternalLines(!orientation, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
+    }
     destination.endDraw();
   }
 
   // If the orientation is true, lines are draw from left to right
   // If the orientation is false, lines are draw from right to left
   void drawInternalLines(boolean orientation, int gap, int initialX, int initialY, int widthRectangle, int heightRectangle) {
+    pushStyle();
+    strokeWeight(4);
+    stroke(0);
     int leftGap = gap, rightGap = gap;
     int rest1 = 0, rest2 = 0;
 
@@ -80,6 +93,7 @@ class Illusion1 {
           if (rest1 != 0) {
             currentY1 = initialY;
             currentX1 += rest1;
+         
             rest1 = 0;
           }
           currentX1 += leftGap;
@@ -109,7 +123,10 @@ class Illusion1 {
         }
 
         if ((currentX1 > initialX + widthRectangle) && (currentY2 < initialY)) break;
-        System.out.println("X1: " + currentX1 + " Y1:" + currentY1 + " // X2:" + currentX2 + " Y2:" + currentY2 + "///" + corner1 + " " + corner2); 
+        //System.out.println("X1: " + currentX1 + " Y1:" + currentY1 + " // X2:" + currentX2 + " Y2:" + currentY2 + "///" + corner1 + " " + corner2);
+        //if(currentY1 < initialY){ currentY1 = initialY; currentX1 += leftGap; println(currentX1);}
+        //if(currentX2 > initialX + widthRectangle) {currentY2 = currentX2 - initialX + widthRectangle; currentX2 = initialX + widthRectangle;}
+        //if(currentY2 < initialY) currentY2 = initialY;
         line(currentX1, currentY1, currentX2, currentY2);
       }
     } else {
@@ -166,10 +183,14 @@ class Illusion1 {
           currentY2 += rightGap;
         }
         if ((currentX1 > initialX + widthRectangle) && (currentY2 > initialY + heightRectangle)) break;
+        //if(currentY1 > initialY + widthRectangle){ currentY1 = initialY + widthRectangle;}
+        //if(currentX2 > initialX + widthRectangle - 1) {currentY2 += currentX2 - (initialX + widthRectangle); currentX2 = initialX + widthRectangle;}
+        //if(currentX1 > initialX + widthRectangle) currentX1 = initialX + widthRectangle;
         //System.out.println("X1: " + currentX1 + " Y1:" + currentY1 + " // X2:" + currentX2 + " Y2:" + currentY2 + "///" + corner1 + " " + corner2);
         //System.out.println("--------");
         line(currentX1, currentY1, currentX2, currentY2);
       }
     }
+    popStyle();
   }
 }
