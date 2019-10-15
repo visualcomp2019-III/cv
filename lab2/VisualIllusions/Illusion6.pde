@@ -25,11 +25,9 @@ class Illusion6{
     int counter = 0;
     for(int i = initialX; i <= sizeSide + initialX;){
       for(int j = initialY; j <= sizeSide + initialX;){
-        destination.pushStyle();
-        if(counter % 2 == 0) fill(#20AF1E);
-        else fill(255);
-        destination.popStyle();
-        square(i,j,sizeSideSquare);
+        if(counter % 2 == 0) destination.fill(#20AF1E);
+        else destination.fill(255);
+        destination.square(i,j,sizeSideSquare);
         j += sizeSideSquare;
         counter++;
       }
@@ -41,27 +39,26 @@ class Illusion6{
       for(int j = initialY; j <= sizeSide + initialX - sizeSideSquare;){
   
         if(getRandomIntegerBetweenRange(1,2) % 2 == 0){ 
-          destination.pushStyle();
-          fill(255);
-          quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
-          quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
-          destination.popStyle();
-          destination.pushStyle();
-          fill(0);
-          quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
-          quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
-          destination.popStyle();
+
+          destination.fill(255);
+          destination.quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
+          destination.quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
+
+          destination.fill(0);
+          destination.quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
+          destination.quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
+
         }  else {
-          destination.pushStyle();
-          fill(0);
-          quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
-          quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
-          destination.popStyle();
-          destination.pushStyle();
-          fill(255);
-          quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
-          quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
-          destination.popStyle();
+        
+          destination.fill(0);
+          destination.quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
+          destination.quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
+   
+      
+          destination.fill(255);
+          destination.quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
+          destination.quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
+  
           
         }
        
@@ -74,7 +71,7 @@ class Illusion6{
     }
     
     
-    
+    //destination.updatePixels();
     destination.endDraw();
   
   

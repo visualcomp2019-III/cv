@@ -49,7 +49,8 @@ void draw() {
   } else if (currentIllusion == 5) {
     illusion5.drawIllusion();
   } else if (currentIllusion == 6) {
-    //illusion6.drawIllusion();
+    illusion6.drawIllusion();
+    buttons[5].label = "sjd";
   }
 }
 
@@ -86,6 +87,7 @@ void mouseClicked() {
     currentIllusion = 5;
   } else if (buttons[5].mouseIsOver()) {
     illusion6.drawIllusion();
+    
     currentIllusion = 6;
   }
   if(changeOrientation.mouseIsOver()){
