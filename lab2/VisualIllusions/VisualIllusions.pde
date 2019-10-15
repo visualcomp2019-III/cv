@@ -2,6 +2,7 @@ PGraphics pgVisualIlussion;
 
 final int TOTAL_BUTTONS = 6;
 Button[] buttons = new Button[TOTAL_BUTTONS];
+Button changeOrientation;
 
 final int BUTTON_HEIGHT = 50;
 int PG_ILLUSION_HEIGHT = 600;
@@ -25,7 +26,7 @@ void setup() {
   createButtons();
   drawAllButtons();
 
-  illusion1 = new Illusion1(pgVisualIlussion);
+  illusion1 = new Illusion1(pgVisualIlussion, true);
   illusion2 = new Illusion2(pgVisualIlussion);
   illusion3 = new Illusion3(pgVisualIlussion, 0, 15);
   illusion4 = new Illusion4(pgVisualIlussion, 500, 100, 60, 110, 6, color(0), color(200));
@@ -68,6 +69,7 @@ void mouseClicked() {
   if (buttons[0].mouseIsOver()) {
     pgToClear(pgVisualIlussion);
     illusion1.drawIllusion();
+    changeOrientation.drawButton();
     currentIllusion = 1;
   } else if (buttons[1].mouseIsOver()) {
     currentIllusion = 2;
@@ -84,25 +86,34 @@ void mouseClicked() {
     illusion6.drawIllusion();
     currentIllusion = 6;
   }
+  if(changeOrientation.mouseIsOver()){
+    illusion1.orientation = !illusion1.orientation;
+    illusion1.drawIllusion();
+  }
   image(pgVisualIlussion, 50, 80);
 }
 
 void createButtons() {
   //Set width of the buttons
   int accumulatedWidth = 10, buttonsGap = 10;
-  String[] titleButtons = {"Button 1", "Button 2", "Reverse Spoke", "Shaded Diamonds", "Kaleidoscope Motion", "Button 6"};
+  String[] titleButtons = {"Titled Table", "Devil's Fork", "Reverse Spoke", "Shaded Diamonds", "Kaleidoscope Motion", "Checker illusion"};
   int[] widthButtons = {120, 120, 120, 120, 130, 120};
 
   for (int i = 0; i < TOTAL_BUTTONS; i++) {
     buttons[i] = new Button(titleButtons[i], accumulatedWidth, 5, widthButtons[i], 50);
     accumulatedWidth += buttonsGap + widthButtons[i];
   }
+  
+  changeOrientation = new Button("Cambiar orientacion", 850, 5, 200, 50);
+  
+  
 }
 
 void drawAllButtons() {
   for (int i = 0; i < buttons.length; i++) {
     buttons[i].drawButton();
   }
+  
 }
 
 void pgToClear(PGraphics pgToClear) {

@@ -5,8 +5,10 @@
 class Illusion1 {
 
   PGraphics destination; 
-  Illusion1(PGraphics destination) {
+  boolean orientation;
+  Illusion1(PGraphics destination, boolean orientation) {
     this.destination = destination;
+    this.orientation = orientation;
   }
 
   void drawIllusion() {
@@ -29,10 +31,10 @@ class Illusion1 {
     fill(255);
     rect(initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
 
-    boolean drawLeftToRight = false;
+
     int gap = 12;
-    drawInternalLines(drawLeftToRight, gap, initialX, initialY, widthRectangle, heightRectangle);
-    drawInternalLines(!drawLeftToRight, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
+    drawInternalLines(orientation, gap, initialX, initialY, widthRectangle, heightRectangle);
+    drawInternalLines(!orientation, gap, initialXSecondRectangle, initialYSecondRectangle, widthRectangle/2, heightRectangle*2);
 
     destination.endDraw();
   }
@@ -106,7 +108,7 @@ class Illusion1 {
           currentY2 -= rightGap;
         }
 
-        if ((currentX1 >= initialX + widthRectangle) && (currentY2 <= initialY)) break;
+        if ((currentX1 > initialX + widthRectangle) && (currentY2 < initialY)) break;
         System.out.println("X1: " + currentX1 + " Y1:" + currentY1 + " // X2:" + currentX2 + " Y2:" + currentY2 + "///" + corner1 + " " + corner2); 
         line(currentX1, currentY1, currentX2, currentY2);
       }
@@ -163,7 +165,7 @@ class Illusion1 {
           currentX1 += leftGap;
           currentY2 += rightGap;
         }
-        if ((currentX1 >= initialX + widthRectangle) && (currentY2 >= initialY + heightRectangle)) break;
+        if ((currentX1 > initialX + widthRectangle) && (currentY2 > initialY + heightRectangle)) break;
         //System.out.println("X1: " + currentX1 + " Y1:" + currentY1 + " // X2:" + currentX2 + " Y2:" + currentY2 + "///" + corner1 + " " + corner2);
         //System.out.println("--------");
         line(currentX1, currentY1, currentX2, currentY2);
