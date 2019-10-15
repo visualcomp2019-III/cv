@@ -25,6 +25,7 @@ class Illusion6{
     int counter = 0;
     for(int i = initialX; i <= sizeSide + initialX;){
       for(int j = initialY; j <= sizeSide + initialX;){
+        destination.noStroke();
         if(counter % 2 == 0) destination.fill(#20AF1E);
         else destination.fill(255);
         destination.square(i,j,sizeSideSquare);
@@ -41,21 +42,25 @@ class Illusion6{
         if(getRandomIntegerBetweenRange(1,2) % 2 == 0){ 
 
           destination.fill(255);
+          destination.noStroke();
           destination.quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
           destination.quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
 
           destination.fill(0);
+          destination.noStroke();
           destination.quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
           destination.quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
 
         }  else {
         
           destination.fill(0);
+          destination.noStroke();
           destination.quad(i + sizeSideSquare, j + sizeSideSquare - sizeSideLittleSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare - (sizeSideLittleSquare / 2));
           destination.quad(i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare + sizeSideLittleSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2) , j + sizeSideSquare + (sizeSideLittleSquare / 2));
    
       
           destination.fill(255);
+          destination.noStroke();
           destination.quad(i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare - sizeSideLittleSquare , j + sizeSideSquare, i + sizeSideSquare - (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare);
           destination.quad(i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare - (sizeSideLittleSquare / 2), i + sizeSideSquare, j + sizeSideSquare, i + sizeSideSquare + (sizeSideLittleSquare / 2), j + sizeSideSquare + (sizeSideLittleSquare / 2), i + sizeSideSquare + sizeSideLittleSquare, j + sizeSideSquare);
   
