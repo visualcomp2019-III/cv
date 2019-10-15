@@ -51,3 +51,4 @@ La ilusión que mejor cumple su efecto es la segunda, en la que el contraste hac
 [titled-table-link]: https://michaelbach.de/ot/ang-tiltedTable/index.html
 [checker-illusion]: https://co.pinterest.com/pin/445223113150338449/?nic=1
 [devils-fork]: https://michaelbach.de/ot/cog-imposs1/index.html
+[princesa-viejo]: https://michaelbach.de/ot/cog-rotations/index.html
