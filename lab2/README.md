@@ -28,11 +28,11 @@ Implementar al menos 6 ilusiones de tres tipos distintos (paradójicas, geométr
 | Reverse Spoke Illusion | Geométrica | [Ilusión de referencia][reverse-spoke-link] | Cambiar espectro con scrollbar y cambiar velocidad con teclado | |
 | Shaded Diamonds | Fisiológica | [Ilusión de referencia][shaded-diamonds-link]| | [Para el gradiente del color][color-gradient]|
 | Kaleidoscope Motion | Movimiento | [Ilusión de referencia][kaleidoscope-link]| Teclado para cambiar velocidad | [Referencia para dibujar cada figura][kaleidoscope-reference-link]|
-| Checker illusion        |   Fisiológica        |   [Ilusión de referencia][[checker-illusion]]         | Se puede redibujar la ilusión para que hayan distintas curvas formadas por los rombos internos                                   |                             |
+| Checker illusion        |   Fisiológica        |   [Ilusión de referencia][checker-illusion]         | Se puede redibujar la ilusión para que hayan distintas curvas formadas por los rombos internos                                   |                             |
 
 2.Describa brevememente las referencias estudiadas y los posibles temas en los que le gustaría profundizar
 
-La ilusión que mejor cumple su efecto es la segunda, en la que el contraste hace que las líneas indistintamente parece que giraran, es un efecto simple pero poderoso en la vista, a pesar de esto, nos gustaria profundizar en alguna oportunidad en la posibilidad de crear ilusiones ambiguas de una manera más sistemica, es bien conocido la clásica de la [princesa y el viejo][https://michaelbach.de/ot/cog-rotations/index.html] pero parece que existe una cuestión más artistica en la creación de esta porque no se podría generalizar a simple vista como se podrían construir esta. 
+La ilusión que mejor cumple su efecto es la segunda, en la que el contraste hace que las líneas indistintamente parece que giraran, es un efecto simple pero poderoso en la vista, a pesar de esto, nos gustaria profundizar en alguna oportunidad en la posibilidad de crear ilusiones ambiguas de una manera más sistemica, es bien conocido la clásica de la [princesa y el viejo][princesa-viejo] pero parece que existe una cuestión más artistica en la creación de esta porque no se podría generalizar a simple vista como se podrían construir esta. 
 
 ## Entrega
 
@@ -48,3 +48,4 @@ La ilusión que mejor cumple su efecto es la segunda, en la que el contraste hac
 [titled-table-link]: https://michaelbach.de/ot/ang-tiltedTable/index.html
 [checker-illusion]: https://co.pinterest.com/pin/445223113150338449/?nic=1
 [devils-fork]: https://michaelbach.de/ot/cog-imposs1/index.html
+[princesa-viejo]: https://michaelbach.de/ot/cog-rotations/index.html
