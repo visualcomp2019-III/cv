@@ -41,23 +41,22 @@ void setup() {
   image(pg, 50, 120);
 }
 
-float speed = frameCount / 150.0;
 int points = 13;
 void draw() {
-  if(currentIllusion == 1){
+  if (currentIllusion == 1) {
     illusion1.drawIllusion();
-  } else if(currentIllusion == 2){
+  } else if (currentIllusion == 2) {
     illusion2.drawIllusion();
   } else if (currentIllusion == 3) {
     frameRate(illusion3.rate);
     illusion3.setContrast((int)hs1.getPos() / 10);
     illusion3.drawIllusion();
-    image(pg, 50, 120);
+    //image(pg, 50, 120);
     stroke(160);
     hs1.update();
     hs1.display();
   } else if (currentIllusion == 4) {
-    illusion4.drawIllusion();
+    //illusion4.drawIllusion();
   } else if (currentIllusion == 5) {
     illusion5.drawIllusion();
   } else if (currentIllusion == 6) {
@@ -76,7 +75,6 @@ void keyPressed() {
 }
 
 void mouseClicked() {
-
   currentIllusion = 0;
 
   if (buttons[0].mouseIsOver()) {
@@ -100,11 +98,6 @@ void mouseClicked() {
 
   displayAllPgs();
 }
-
-
-
-
-
 
 void createButtons() {
   //Set width of the buttons
@@ -134,7 +127,6 @@ void pgToClear(PGraphics pgToClear) {
   clearPg(pgToClear);
   pgToClear.updatePixels();
   pgToClear.endDraw();
-
 }
 
 void clearPg(PImage pgToClear) {
