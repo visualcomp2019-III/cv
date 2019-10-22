@@ -5,7 +5,7 @@ import nub.processing.*;
 // 1. Nub objects
 Scene scene;
 Node node;
-Vector v1, v2, v3;
+Vector v1, v2, v3, point;
 // timing
 TimingTask spinningTask;
 boolean yDirection;
@@ -17,6 +17,8 @@ boolean triangleHint = true;
 boolean gridHint = true;
 boolean debug = true;
 boolean shadeHint = false;
+int low = -width/2;
+int high = width/2;
 
 // 3. Use FX2D, JAVA2D, P2D or P3D
 String renderer = P2D;
@@ -83,17 +85,54 @@ void triangleRaster() {
     push();
     noStroke();
     fill(255, 0, 0, 125);
+    
     square(round(node.location(v1).x()), round(node.location(v1).y()), 1);
     pop();
+    
+    
+    
+    frameRate(0);
+   for(int x = round(min(v1.x(),v2.x(),v3.x())); x < round(max(v1.x(),v2.x(),v3.x()));){
+    for(int y = round(min(v1.y(),v2.y(),v3.y())); y < round(max(v1.y(),v2.y(),v3.y()));){
+      
+      point = new Vector(x, y);
+      if(checkIfInside(v1, v2, v3, point)){
+        println(x + " // " + y); 
+        push();
+        noStroke();
+        fill(255, 0, 0, 125);
+        square(round(node.location(point).x()), round(node.location(point).y()), 1);
+        pop();
+      }
+    y += node.magnitude();
+    }
+    x += node.magnitude();
+  }
+    
+    
   }
 }
 
 void randomizeTriangle() {
-  int low = -width/2;
-  int high = width/2;
-  v1 = new Vector(random(low, high), random(low, high));
-  v2 = new Vector(random(low, high), random(low, high));
-  v3 = new Vector(random(low, high), random(low, high));
+  low = -width/2;
+  high = width/2;
+  //v1 = new Vector(random(low, high), random(low, high));
+  //v2 = new Vector(random(low, high), random(low, high));
+  //v3 = new Vector(random(low, high), random(low, high));
+  v1 = new Vector(0, 0);
+  v2 = new Vector(100, 0);
+  v3 = new Vector(0, -100);
+  Vector pointTest = new Vector(50,-1);
+  //edgeFucntion(v0,v1,p);
+  println(checkIfInside(v1,v2,v3, pointTest));
+
+  
+  System.out.println(v1);
+  System.out.println(v2);
+  System.out.println(v3);
+
+  
+  
 }
 
 void drawTriangleHint() {
@@ -136,20 +175,25 @@ void drawTriangleHint() {
 
 
 
-boolean edgeFunction(int a)
+boolean edgeFunction(Vector V0, Vector V1, Vector P) 
 { 
-    return (boolean) ((P.x - V0.x) * (V1.y - V0.y) - (P.y - V0.y) * (V1.x - V0.x) >= 0); 
+    //println("/////////");
+    //println(V0);
+    //println(V1);
+    //println(P);
+    //println(((P.x() - V0.x()) * (V1.y() - V0.y()) - (P.y() - V0.y()) * (V1.x() - V0.x())));
+    //println("/////////");
+    return (boolean) ((P.x() - V0.x()) * (V1.y() - V0.y()) - (P.y() - V0.y()) * (V1.x() - V0.x()) >= 0); 
 } 
  
-bool inside = true; 
-inside &= edgeFunction(V0, V1, p); 
-inside &= edgeFunction(V1, V2, p); 
-inside &= edgeFunction(V2, V0, p); 
  
-if (inside == true) { 
-    // point p is inside triangles defined by vertices v0, v1, v2
-    ... 
-} 
+ 
+
+boolean checkIfInside(Vector V0, Vector V1, Vector V2, Vector P){
+
+  if(edgeFunction(V0, V1, P) && edgeFunction(V1, V2, P) && edgeFunction(V2, V0, P)) return true;
+  else return false;
+}
 void keyPressed() {
   if (key == 'g')
     gridHint = !gridHint;
@@ -176,4 +220,10 @@ void keyPressed() {
       spinningTask.run();
   if (key == 'y')
     yDirection = !yDirection;
+  if(key == 'p'){
+    System.out.println(point);
+    point = new Vector(random(low, high), random(low, high));
+    System.out.println(checkIfInside(v1, v2, v3, point));
+    
+  }
 }
