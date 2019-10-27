@@ -95,12 +95,6 @@ void triangleRaster() {
   // node.location converts points from world to node
   // here we convert v1 to illustrate the idea
   if (debug) {
-    //push();
-    //noStroke();
-    //fill(255, 0, 0, 125);
-
-    //square(round(node.location(v1).x()), round(node.location(v1).y()), 1);
-    //pop();
 
     float proportion = 1.0;
     for (int x = round(min(v1.x(), v2.x(), v3.x())); x < round(max(v1.x(), v2.x(), v3.x())); ) {
@@ -108,7 +102,7 @@ void triangleRaster() {
 
         point = new Vector(x, y);
         float[] currentColor = getColorByBarycentricCoordinates(v1, v2, v3, point);
-        //println("Curr " + currentColor[1]);
+
         if (checkIfInside(v1, v2, v3, point, clockwise)) {
           push();
           noStroke();
@@ -117,10 +111,10 @@ void triangleRaster() {
             applyAntiAliasing(point, node.magnitude(), clockwise);
             proportion = applyAntiAliasing(point, node.magnitude(), !clockwise);
             fill(color(proportion*currentColor[0], proportion*currentColor[1], proportion*currentColor[2]));
-          } else {
+          } else 
 
-            fill(color(currentColor[0], currentColor[1], currentColor[2]));
-          }
+          fill(color(currentColor[0], currentColor[1], currentColor[2]));
+
 
           square(round(node.location(point).x()), round(node.location(point).y()), squareSide);
           pop();
@@ -132,10 +126,10 @@ void triangleRaster() {
           {
             proportion = applyAntiAliasing(point, node.magnitude(), !clockwise);
             fill(color(proportion*currentColor[0], proportion*currentColor[1], proportion*currentColor[2]));
-          } else {
+          } else 
 
-            fill(color(currentColor[0], currentColor[1], currentColor[2]));
-          }
+          fill(color(currentColor[0], currentColor[1], currentColor[2]));
+
           square(round(node.location(point).x()), round(node.location(point).y()), squareSide);
           pop();
           //println(x + " // " + y);
@@ -177,29 +171,21 @@ float applyAntiAliasing(Vector point, float squareSide, boolean clockwise) {
 
   int total = 0;
   int counterInside = 0;
+  //Uncomment this to check just the squares that are in the edges, but for now is not working
   // if (!inside) {
   for (int x = minX; x < maxX; ) {
-    // println("x: "  + x + " from  " + minX + " to " + maxX + " factor: " + factor + " counter " + counterInside );
+
     for (int y = minY; y < maxY; ) {
-      // println("y: "  + y + " from  " + minY + " to " + minY + " factor: " + factor + " counter " + counterInside );
+
       point = new Vector(x, y);
-      float[] currentColor = getColorByBarycentricCoordinates(v1, v2, v3, point);
-      if (checkIfInside(v1, v2, v3, point, clockwise)) {
-        //push();
-        //noStroke();
-        //fill(color(currentColor[0], currentColor[1], currentColor[2]));
-        //square(round(node.location(point).x()), round(node.location(point).y()), 1);
-        //pop();
+
+      if (checkIfInside(v1, v2, v3, point, clockwise)) 
+
         counterInside++;
-      }
-      if (checkIfInside(v1, v2, v3, point, !clockwise)) {
-        //push();
-        //noStroke();
-        //fill(color(currentColor[0], currentColor[1], currentColor[2]));
-        //square(round(node.location(point).x()), round(node.location(point).y()), 1);
-        //pop();
+
+      if (checkIfInside(v1, v2, v3, point, !clockwise)) 
         counterInside++;
-      }
+
 
       y += (node.magnitude()/factor);
       total++;
@@ -210,7 +196,6 @@ float applyAntiAliasing(Vector point, float squareSide, boolean clockwise) {
   return ((float) counterInside/ (float) total);
   //}
   //return 1.0;
-  //node.setScaling(oldScale);
 }
 
 
@@ -278,29 +263,10 @@ void randomizeTriangle() {
   v1 = new Vector(random(low, high), random(low, high));
   v2 = new Vector(random(low, high), random(low, high));
   v3 = new Vector(random(low, high), random(low, high));
-  //v1 = new Vector(0, 0);
-  //v2 = new Vector(0, -100);
-  //v3 = new Vector(100, 0);
+
   c1 = new Vector(1.0, 0, 0);
   c2 = new Vector(0, 1.0, 0);
   c3 = new Vector(0, 0, 1.0);
-  //println(v1);
-  //println(v2);
-  //println(v3);
-
-  Vector tmp1 = (sortVectors (sortVectors(v1, v2), v3));
-
-  //v1 = new Vector(0, 0);
-  //v2 = new Vector(100, 0);
-  //v3 = new Vector(0, -100);
-  Vector pointTest = new Vector(50, -1);
-  //edgeFucntion(v0,v1,p);
-
-
-
-  //  System.out.println(v1);
-  //  System.out.println(v2);
-  //  System.out.println(v3);
 }
 
 void drawTriangleHint() {
