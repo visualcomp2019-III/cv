@@ -50,8 +50,6 @@ Para probar todos los pasos anteriores se puede usar
 [lecture]:https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-practical-implementation
 
 
-Describa los resultados obtenidos. En el caso de anti-aliasing describir las técnicas exploradas, citando las referencias.
-
 ## Entrega
 
 * Plazo: ~~20/10/19~~ 27/10/19 a las 24h.
